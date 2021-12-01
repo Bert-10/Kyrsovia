@@ -13,6 +13,9 @@ namespace Repeat
         public int MousePositionX;
         public int MousePositionY;
 
+        public float GravitationX = 0;
+        public float GravitationY = 1;
+
         public void UpdateState()
         {
             foreach (var particle in particles)
@@ -33,7 +36,8 @@ namespace Repeat
                 }
                 else
                 {
-
+                    particle.SpeedX += GravitationX;
+                    particle.SpeedY += GravitationY;
                     // так как теперь мы храним вектор скорости в явном виде и его не надо пересчитывать
                     particle.X += particle.SpeedX;
                     particle.Y += particle.SpeedY;

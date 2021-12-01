@@ -42,8 +42,8 @@ namespace Repeat
 
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
-            MousePositionX = e.X;
-            MousePositionY = e.Y;
+            emitter.MousePositionX = e.X;
+            emitter.MousePositionY = e.Y;
         }
     }
 }
