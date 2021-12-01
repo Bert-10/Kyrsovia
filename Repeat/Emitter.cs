@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace Repeat
 {
-    class Emitter
+     public class Emitter
     {
         List<Particle> particles = new List<Particle>();
         public int MousePositionX;
@@ -25,16 +25,7 @@ namespace Repeat
                 particle.Life -= 1;
                 if (particle.Life < 0)
                 {
-                    particle.Life = 20 + Particle.rand.Next(100);
-                    particle.X = MousePositionX;
-                    particle.Y = MousePositionY;
-
-                    var direction = (double)Particle.rand.Next(360);
-                    var speed = 1 + Particle.rand.Next(10);
-
-                    particle.SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
-                    particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
-                    particle.Radius = 2 + Particle.rand.Next(10);
+                    ResetParticle(particle);
                 }
                 else
                 {
@@ -61,6 +52,7 @@ namespace Repeat
                     particle.Y = MousePositionY;
                     particles.Add(particle);
                     */
+                    /*
                     //для цветных частиц
                     var particle = new ParticleColorful();
                     particle.FromColor = Color.Yellow;
@@ -68,7 +60,14 @@ namespace Repeat
                     particle.X = MousePositionX;
                     particle.Y = MousePositionY;
                     particles.Add(particle);
+                    */
+                    var particle = new ParticleColorful();
+                    particle.FromColor = Color.White;
+                    particle.ToColor = Color.FromArgb(0, Color.Black);
 
+                    ResetParticle(particle); // добавили вызов ResetParticle
+
+                    particles.Add(particle);
                 }
                 else
                 {
@@ -91,7 +90,36 @@ namespace Repeat
             }
         }
 
+        public virtual void ResetParticle(Particle particle)
+        {
+            particle.Life = 20 + Particle.rand.Next(100);
+            particle.X = MousePositionX;
+            particle.Y = MousePositionY;
+
+            var direction = (double)Particle.rand.Next(360);
+            var speed = 1 + Particle.rand.Next(10);
+
+            particle.SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
+            particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
+
+            particle.Radius = 2 + Particle.rand.Next(10);
+        }
     }
 
-    
+    public class TopEmitter : Emitter
+    {
+        public int Width; // длина экрана
+
+        public override void ResetParticle(Particle particle)
+        {
+            base.ResetParticle(particle); // вызываем базовый сброс частицы, там жизнь переопределяется и все такое
+
+            // а теперь тут уже подкручиваем параметры движения
+            particle.X = Particle.rand.Next(Width); // позиция X -- произвольная точка от 0 до Width
+            particle.Y = 0;  // ноль -- это верх экрана 
+
+            particle.SpeedY = 1; // падаем вниз по умолчанию
+            particle.SpeedX = Particle.rand.Next(-2, 2); // разброс влево и вправа у частиц 
+        }
+    }
 }
