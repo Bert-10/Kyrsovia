@@ -29,5 +29,19 @@ namespace Repeat
                 particles.Add(particle);
             }
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            using (var g = Graphics.FromImage(picDisplay.Image))
+            {
+                g.Clear(Color.White);
+                foreach (var particle in particles)
+                {
+                    particle.Draw(g);
+                }
+            }
+
+            picDisplay.Invalidate();
+        }
     }
 }
