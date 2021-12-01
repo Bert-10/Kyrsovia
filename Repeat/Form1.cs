@@ -19,15 +19,7 @@ namespace Repeat
             InitializeComponent();
             // привязал изображение
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
-            for (var i = 0; i < 500; ++i)
-            {
-                var particle = new Particle();
-                // переношу частицы в центр изображения
-                particle.X = picDisplay.Image.Width / 2;
-                particle.Y = picDisplay.Image.Height / 2;
-                // добавляю список
-                particles.Add(particle);
-            }
+            
         }
 
         private void UpdateState()
@@ -56,6 +48,31 @@ namespace Repeat
                     particle.Y -= (float)(particle.Speed * Math.Sin(directionInRadians));
                 }
             }
+
+            for (var i = 0; i < 10; ++i)
+            {
+                if (particles.Count < 500) // пока частиц меньше 500 генерируем новые
+                {
+                    /* для обычных частиц (чёрно-белые)
+                    var particle = new Particle();
+                    particle.X = MousePositionX;
+                    particle.Y = MousePositionY;
+                    particles.Add(particle);
+                    */
+                    //для цветных частиц
+                    var particle = new ParticleColorful();                  
+                    particle.FromColor = Color.Yellow;
+                    particle.ToColor = Color.FromArgb(0, Color.Magenta);
+                    particle.X = MousePositionX;
+                    particle.Y = MousePositionY;
+                    particles.Add(particle);
+
+                }
+                else
+                {
+                    break; // а если частиц уже 500 штук, то ничего не генерирую
+                }
+            }
         }
 
         // функция рендеринга
@@ -74,7 +91,7 @@ namespace Repeat
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
-                g.Clear(Color.White);
+                g.Clear(Color.Black);
                 Render(g); // рендерим систему
             }
 
