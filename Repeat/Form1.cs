@@ -12,7 +12,9 @@ namespace Repeat
 {
     public partial class Form1 : Form
     {
-        List<Particle> particles = new List<Particle>();
+        //List<Particle> particles = new List<Particle>();
+
+        List<Emitter> emitters = new List<Emitter>();
         Emitter emitter;
 
         public Form1()
@@ -20,11 +22,27 @@ namespace Repeat
             InitializeComponent();
             // привязал изображение
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
+            /*
             emitter = new TopEmitter
             {
                 Width = picDisplay.Width,
                 GravitationY = 0.25f
             };
+            */
+            this.emitter = new Emitter // создаю эмиттер и привязываю его к полю emitter
+            {
+                Direction = 0,
+                Spreading = 10,
+                SpeedMin = 10,
+                SpeedMax = 10,
+                ColorFrom = Color.Gold,
+                ColorTo = Color.FromArgb(0, Color.Red),
+                ParticlesPerTick = 10,
+                X = picDisplay.Width / 2,
+                Y = picDisplay.Height / 2,
+            };
+
+            emitters.Add(this.emitter);
             /*
             emitter.impactPoints.Add(new GravityPoint
             {
@@ -69,6 +87,12 @@ namespace Repeat
         {
             emitter.MousePositionX = e.X;
             emitter.MousePositionY = e.Y;
+        }
+
+        private void tbDirection_Scroll(object sender, EventArgs e)
+        {
+            emitter.Direction = tbDirection.Value;
+            lblDirection.Text = $"{tbDirection.Value}°";
         }
     }
 }
