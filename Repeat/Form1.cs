@@ -39,8 +39,8 @@ namespace Repeat
                 Spreading = 10,
                 SpeedMin = 10,
                 SpeedMax = 10,
-                // ColorFrom = Color.Gold,
-                ColorFrom = Color.Pink,
+                 ColorFrom = Color.Gold,
+              //  ColorFrom = Color.Pink,
                 ColorTo = Color.FromArgb(0, Color.Red),
                 ParticlesPerTick = 10,
                 X = picDisplay.Width / 2,
@@ -80,7 +80,13 @@ namespace Repeat
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
-                g.Clear(Color.Black);
+
+                   g.Clear(Color.FromArgb(0, 0, 0, 0));
+                //  picDisplay.Image = null;
+             //   picDisplay.InitialImage = null;
+                //    picDisplay.BackgroundImage = Properties.Resources.handsome;                
+                 //  picDisplay.Image = Properties.Resources.handsome;
+
                 emitter.Render(g); // рендерим систему
                 
                  switch (task)
@@ -282,7 +288,7 @@ namespace Repeat
             tbdValue1 = tbDirection.Value;
             speedV1 = speedBar.Value;
 
-            g.DrawEllipse(new Pen(Color.Yellow), picDisplay.Width / 2 - Xcirlce / 2, picDisplay.Height / 2 - Ycirlce / 2, Xcirlce, Ycirlce);
+            g.DrawEllipse(new Pen(Color.Purple,3), picDisplay.Width / 2 - Xcirlce / 2, picDisplay.Height / 2 - Ycirlce / 2, Xcirlce, Ycirlce);
             pos = pos + speed;
 
             emitter.X = (int)(picDisplay.Width / 2 + Xcirlce / 2 * Math.Cos(pos));

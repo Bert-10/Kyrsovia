@@ -55,9 +55,11 @@ namespace Repeat
             // 
             // picDisplay
             // 
-            this.picDisplay.Location = new System.Drawing.Point(5, 36);
+            this.picDisplay.BackgroundImage = global::Repeat.Properties.Resources.handsome;
+            this.picDisplay.Location = new System.Drawing.Point(5, 37);
             this.picDisplay.Name = "picDisplay";
-            this.picDisplay.Size = new System.Drawing.Size(496, 475);
+            this.picDisplay.Size = new System.Drawing.Size(371, 529);
+            this.picDisplay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
             this.picDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picDisplay_MouseMove);
@@ -207,7 +209,7 @@ namespace Repeat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(737, 580);
+            this.ClientSize = new System.Drawing.Size(688, 578);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
