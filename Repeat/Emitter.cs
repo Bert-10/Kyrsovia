@@ -9,13 +9,16 @@ namespace Repeat
 {
      public class Emitter
     {
-        List<Particle> particles = new List<Particle>();
+          public List<Particle> particles = new List<Particle>();
+      //  public static List<Particle> particles = new List<Particle>();
+        public int count=0;
+
         public int MousePositionX;
         public int MousePositionY;
         public float GravitationX = 0;
         public float GravitationY = 1;       
         public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
-        public int ParticlesCount = 500;
+        public int ParticlesCount = 1500;
         //---
         public int X; // координата X центра эмиттера
         public int Y; // соответствующая координата Y 
@@ -36,7 +39,7 @@ namespace Repeat
         public void UpdateState()
         {
             int particlesToCreate = ParticlesPerTick;
-
+            count = 0;
             foreach (var particle in particles)
             {
                 if (particle.Life <= 0) // если частицы умерла
@@ -44,15 +47,22 @@ namespace Repeat
                     /* 
                      * то проверяем надо ли создать частицу
                      */
+                    count--;
                     if (particlesToCreate > 0)
                     {
                         /* у нас как сброс частицы равносилен созданию частицы */
                         particlesToCreate -= 1; // поэтому уменьшаем счётчик созданных частиц на 1
                         ResetParticle(particle);
+                        count++;
                     }
                 }
                 else
                 {
+                    // так как теперь мы храним вектор скорости в явном виде и его не надо пересчитывать
+                    particle.X += particle.SpeedX;
+                    particle.Y += particle.SpeedY;
+
+                    particle.Life -= 1;
                     foreach (var point in impactPoints)
                     {
                         point.ImpactParticle(particle);
@@ -60,10 +70,10 @@ namespace Repeat
 
                     particle.SpeedX += GravitationX;
                     particle.SpeedY += GravitationY;
-                    // так как теперь мы храним вектор скорости в явном виде и его не надо пересчитывать
-                    particle.X += particle.SpeedX;
-                    particle.Y += particle.SpeedY;
+
+                    //count++;
                 }
+                count++;
             }
 
             while (particlesToCreate >= 1)
@@ -72,7 +82,10 @@ namespace Repeat
                 var particle = CreateParticle();
                 ResetParticle(particle);
                 particles.Add(particle);
+            //    count++;
             }
+
+          //  count = particles.Count;
         }
 
         public void Render(Graphics g)

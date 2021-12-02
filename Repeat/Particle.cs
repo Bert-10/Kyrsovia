@@ -71,7 +71,7 @@ namespace Repeat
             );
         }
 
-        // ну и отрисовку перепишем
+        
         public override void Draw(Graphics g)
         {
             float k = Math.Min(1f, Life / 100);
