@@ -13,11 +13,11 @@ namespace Repeat
         public int MousePositionX;
         public int MousePositionY;
         public float GravitationX = 0;
-        public float GravitationY = 1;
+        public float GravitationY = 1;       
         public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
         public int ParticlesCount = 500;
         //---
-        public int X; // координата X центра эмиттера, будем ее использовать вместо MousePositionX
+        public int X; // координата X центра эмиттера
         public int Y; // соответствующая координата Y 
         public int Direction = 0; // вектор направления в градусах куда сыпет эмиттер
         public int Spreading = 360; // разброс частиц относительно Direction
@@ -118,6 +118,8 @@ namespace Repeat
         }
     }
 
+
+    //snow
     public class TopEmitter : Emitter
     {
         public int Width; // длина экрана
