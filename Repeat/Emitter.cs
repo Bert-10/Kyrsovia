@@ -119,11 +119,13 @@ namespace Repeat
             particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
 
             particle.Radius = Particle.rand.Next(RadiusMin, RadiusMax);
+         
         }
 
         public virtual Particle CreateParticle()
         {
-            var particle = new ParticleColorful();
+            //  var particle = new ParticleColorful();
+            var particle = new Particle();
             particle.FromColor = ColorFrom;
             particle.ToColor = ColorTo;
 
@@ -147,6 +149,15 @@ namespace Repeat
 
             particle.SpeedY = 1; // падаем вниз по умолчанию
             particle.SpeedX = Particle.rand.Next(-2, 2); // разброс влево и вправа у частиц 
+
+            particle.FromColor = Color.White;
+
+            /*
+            if  (particle is ParticleColorful) 
+            {               
+                particle.ChangeColorToWhite();
+            }
+            */
         }
     }
 }

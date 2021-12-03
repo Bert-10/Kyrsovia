@@ -59,20 +59,52 @@ namespace Repeat
             snow.impactPoints.Add(new Cirlce
             {
                 X = picDisplay.Width / 2 ,
-                Y = picDisplay.Height / 2 ,
-                R = 120,
+                Y = picDisplay.Height * 7 / 10,
+                R = 100,
                 pen=Color.Red
             }) ;
-
-            /*
-            g.DrawEllipse(new Pen(Color.Red, 4), picDisplay.Width / 2-25, picDisplay.Height / 2-25 ,50 ,50 );
-            g.DrawEllipse(new Pen(Color.Yellow, 4), picDisplay.Width / 4, picDisplay.Height / 8, 45, 45);
-            g.DrawEllipse(new Pen(Color.Lime, 4), picDisplay.Width*3 /5 , picDisplay.Height*3 / 4-20, 90, 90);
-            g.DrawEllipse(new Pen(Color.OrangeRed, 4), picDisplay.Width*3 / 4, picDisplay.Height / 4, 45, 45);
-            g.DrawEllipse(new Pen(Color.Purple, 4), picDisplay.Width * 3 / 4-200, picDisplay.Height *3/ 4, 37, 37);
-            g.DrawEllipse(new Pen(Color.Blue, 4), picDisplay.Width / 5-20, picDisplay.Height / 3, 100, 100);
-            g.DrawEllipse(new Pen(Color.HotPink, 4), picDisplay.Width /2+200, picDisplay.Height / 8 , 40, 40);
-            */
+            snow.impactPoints.Add(new Cirlce
+            {
+                X = picDisplay.Width / 4,
+                Y = picDisplay.Height*2 / 5,
+                R = 70,
+                pen = Color.Yellow
+            });
+            snow.impactPoints.Add(new Cirlce
+            {
+                X = picDisplay.Width * 4 / 5+15,
+                Y = picDisplay.Height * 7 / 10,
+                R = 100,
+                pen = Color.Lime
+            });
+            snow.impactPoints.Add(new Cirlce
+            {
+                X = picDisplay.Width * 3 / 4,
+                Y = picDisplay.Height*2 / 5,
+                R = 70,
+                pen = Color.OrangeRed
+            });
+            snow.impactPoints.Add(new Cirlce
+            {
+                X = picDisplay.Width / 2,
+                Y = picDisplay.Height / 5,
+                R = 40,
+                pen = Color.Purple
+            });
+            snow.impactPoints.Add(new Cirlce
+            {
+                X = picDisplay.Width / 5 - 10,
+                Y = picDisplay.Height * 7 / 10,
+                R = 100,
+                pen = Color.Blue
+            });
+            snow.impactPoints.Add(new Cirlce
+            {
+                X = picDisplay.Width / 2,
+                Y = picDisplay.Height*2 / 5,
+                R = 70,
+                pen = Color.HotPink
+            });
             /*
             emitter.impactPoints.Add(new GravityPoint
             {

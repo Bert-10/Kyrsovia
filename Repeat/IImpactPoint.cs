@@ -34,11 +34,20 @@ namespace Repeat
             float gX = X - particle.X;
             float gY = Y - particle.Y;
             double r = Math.Sqrt(gX * gX + gY * gY); // считаем расстояние от центра точки до центра частицы
-            if (r + particle.Radius < R / 2) // если частица оказалось внутри окружности
+
+
+            if (r + particle.Radius < R / 2)  // если частица оказалось внутри окружности
             {
-              //  particle.FromColor = pen;
+                 particle.FromColor = pen;               
             }
 
+            /*
+            if ((r + particle.Radius < R / 2)&(particle is ParticleColorful)) // если частица оказалось внутри окружности
+            {
+                // particle.FromColor = pen;
+                particle.ChangeColor(pen);
+            }
+            */
 
         }
     }
