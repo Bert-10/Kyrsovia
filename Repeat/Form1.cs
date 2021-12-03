@@ -16,21 +16,26 @@ namespace Repeat
         //List<Particle> particles = new List<Particle>();
         public int task = 1;
         List<Emitter> emitters = new List<Emitter>();
+        List<Emitter> snowfall = new List<Emitter>();
         Emitter emitter;
-      //  Emitter emitter1;
+        Emitter snow;
 
         public Form1()
         {
             InitializeComponent();
             // привязал изображение
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
-            /*
-            emitter1 = new TopEmitter
+         //   /*
+            snow = new TopEmitter
             {
                 Width = picDisplay.Width,
-                GravitationY = 0.25f
+                GravitationY = 0.25f,
+
+             //   ColorFrom = Color.Gold,
+             //  ColorTo = Color.FromArgb(0, Color.AliceBlue),
             };
-            */
+
+         //   */
 
           //  /*
             this.emitter = new Emitter // создаю эмиттер и привязываю его к полю emitter
@@ -39,16 +44,35 @@ namespace Repeat
                 Spreading = 10,
                 SpeedMin = 10,
                 SpeedMax = 10,
-                 ColorFrom = Color.Gold,
-              //  ColorFrom = Color.Pink,
-                ColorTo = Color.FromArgb(0, Color.Red),
+          //       ColorFrom = Color.Gold,
+                ColorFrom = Color.Pink,
+                ColorTo = Color.FromArgb(0, Color.AliceBlue),
                 ParticlesPerTick = 10,
                 X = picDisplay.Width / 2,
                 Y = picDisplay.Height / 2+ Ycirlce/2,
             };
-          //  */
+         //   */
             emitters.Add(this.emitter);
-          //  emitters.Add(this.emitter1);
+            snowfall.Add(snow);
+
+
+            snow.impactPoints.Add(new Cirlce
+            {
+                X = picDisplay.Width / 2 ,
+                Y = picDisplay.Height / 2 ,
+                R = 120,
+                pen=Color.Red
+            }) ;
+
+            /*
+            g.DrawEllipse(new Pen(Color.Red, 4), picDisplay.Width / 2-25, picDisplay.Height / 2-25 ,50 ,50 );
+            g.DrawEllipse(new Pen(Color.Yellow, 4), picDisplay.Width / 4, picDisplay.Height / 8, 45, 45);
+            g.DrawEllipse(new Pen(Color.Lime, 4), picDisplay.Width*3 /5 , picDisplay.Height*3 / 4-20, 90, 90);
+            g.DrawEllipse(new Pen(Color.OrangeRed, 4), picDisplay.Width*3 / 4, picDisplay.Height / 4, 45, 45);
+            g.DrawEllipse(new Pen(Color.Purple, 4), picDisplay.Width * 3 / 4-200, picDisplay.Height *3/ 4, 37, 37);
+            g.DrawEllipse(new Pen(Color.Blue, 4), picDisplay.Width / 5-20, picDisplay.Height / 3, 100, 100);
+            g.DrawEllipse(new Pen(Color.HotPink, 4), picDisplay.Width /2+200, picDisplay.Height / 8 , 40, 40);
+            */
             /*
             emitter.impactPoints.Add(new GravityPoint
             {
@@ -73,10 +97,19 @@ namespace Repeat
 
         }
 
-       
+
         private void timer1_Tick(object sender, EventArgs e)
         {
-            emitter.UpdateState(); // каждый тик обновляем систему
+            if (task != 5)
+            {
+                emitter.UpdateState(); // каждый тик обновляем систему
+            }
+            
+            if (task == 5)
+            {
+                snow.UpdateState();
+            }
+           
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
@@ -87,16 +120,24 @@ namespace Repeat
                 //    picDisplay.BackgroundImage = Properties.Resources.handsome;                
                  //  picDisplay.Image = Properties.Resources.handsome;
 
-                emitter.Render(g); // рендерим систему
-                
+              //  emitter.Render(g); // рендерим систему
+
+               // snow.Render(g);
+
                  switch (task)
                  {
                      case 1:
                          task1(g);
-                         break;
+                        emitter.Render(g);
+                        break;
                      case 2:
                          task2();
-                         break;
+                        emitter.Render(g);
+                        break;
+                    case 5:
+                        snow.Render(g);
+                        task5(g);
+                        break;
                  }
                 
               
@@ -158,6 +199,7 @@ namespace Repeat
         }
 
         int tbdValue1 = 100, tbdValue2=0,speedV1=10, speedV2 = 100;
+        int tb1=3, tb2=3;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -168,6 +210,7 @@ namespace Repeat
 
             // tbDirection.Value = 100;
             tbDirection.Value = tbdValue1;
+            trackBar2.Value = tb1;
 
             label1.Text = "Радиус";
             label2.Text = "Скорость";
@@ -181,15 +224,16 @@ namespace Repeat
             emitter.SpeedMax = 20;
 
             label3.Visible = false;
-            label4.Visible = false;
+           // label4.Visible = false;
             label5.Visible = false;
             label6.Visible = false;
             trackBar1.Visible = false;
-            trackBar2.Visible = false;
+           // trackBar2.Visible = false;
             trackBar3.Visible = false;
 
             emitter.LifeMax = 120;
-            emitter.ParticlesPerTick = 3;
+            //  emitter.ParticlesPerTick = 3;
+            emitter.ParticlesPerTick = tb1;
             emitter.SpeedMax = 20;
         
 
@@ -203,6 +247,7 @@ namespace Repeat
 
             //  tbDirection.Value = 100;
             tbDirection.Value = tbdValue2;
+            trackBar2.Value = tb2;
 
             label1.Text = "Направление";
             label2.Text = "Распределение";
@@ -224,7 +269,7 @@ namespace Repeat
             trackBar3.Visible = true;
 
             emitter.LifeMax = trackBar3.Value;
-            emitter.ParticlesPerTick = trackBar2.Value;
+            emitter.ParticlesPerTick = tb2;
             emitter.SpeedMax = trackBar1.Value;
             emitter.Spreading = speedBar.Value;
             emitter.Direction = tbDirection.Value;
@@ -232,6 +277,17 @@ namespace Repeat
         }
 
         int Xvector1, Xvector2, Yvector1, Yvector2;
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            task = 5;
+
+            snow.ParticlesPerTick =3;
+            snow.ParticlesCount = 3000;
+            snow.LifeMax =160;
+
+
+        }
 
         private void trackBar3_Scroll(object sender, EventArgs e)
         {
@@ -251,7 +307,8 @@ namespace Repeat
             switch (task)
             {
                 case 1:
-
+                    //--
+                    emitter.ParticlesPerTick = trackBar2.Value;
                     break;
                 case 2:
                     emitter.ParticlesPerTick = trackBar2.Value;
@@ -273,6 +330,18 @@ namespace Repeat
         }
 
         double angle;
+        private void task5(Graphics g)
+        {
+            /*
+            g.DrawEllipse(new Pen(Color.Red, 4), picDisplay.Width / 2-25, picDisplay.Height / 2-25 ,50 ,50 );
+            g.DrawEllipse(new Pen(Color.Yellow, 4), picDisplay.Width / 4, picDisplay.Height / 8, 45, 45);
+            g.DrawEllipse(new Pen(Color.Lime, 4), picDisplay.Width*3 /5 , picDisplay.Height*3 / 4-20, 90, 90);
+            g.DrawEllipse(new Pen(Color.OrangeRed, 4), picDisplay.Width*3 / 4, picDisplay.Height / 4, 45, 45);
+            g.DrawEllipse(new Pen(Color.Purple, 4), picDisplay.Width * 3 / 4-200, picDisplay.Height *3/ 4, 37, 37);
+            g.DrawEllipse(new Pen(Color.Blue, 4), picDisplay.Width / 5-20, picDisplay.Height / 3, 100, 100);
+            g.DrawEllipse(new Pen(Color.HotPink, 4), picDisplay.Width /2+200, picDisplay.Height / 8 , 40, 40);
+            */
+        }
 
         private void task2()
         {
@@ -280,15 +349,17 @@ namespace Repeat
              //Xvector1 = particles.Count;
             tbdValue2= tbDirection.Value ;
             speedV2 = speedBar.Value;
+            tb2= trackBar2.Value;
         }
 
         private void task1(Graphics g)
         {
-            //  emitter.GravitationY = (float)(0.5);
+            //emitter.GravitationY = (float)(0.5);
             tbdValue1 = tbDirection.Value;
             speedV1 = speedBar.Value;
+            tb1 = trackBar2.Value;
 
-            g.DrawEllipse(new Pen(Color.Purple,3), picDisplay.Width / 2 - Xcirlce / 2, picDisplay.Height / 2 - Ycirlce / 2, Xcirlce, Ycirlce);
+            g.DrawEllipse(new Pen(Color.LightCoral,4), picDisplay.Width / 2 - Xcirlce / 2, picDisplay.Height / 2 - Ycirlce / 2, Xcirlce, Ycirlce);
             pos = pos + speed;
 
             emitter.X = (int)(picDisplay.Width / 2 + Xcirlce / 2 * Math.Cos(pos));

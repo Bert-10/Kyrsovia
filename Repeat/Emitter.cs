@@ -9,8 +9,8 @@ namespace Repeat
 {
      public class Emitter
     {
-          public List<Particle> particles = new List<Particle>();
-      //  public static List<Particle> particles = new List<Particle>();
+        public List<Particle> particles = new List<Particle>();
+      //public static List<Particle> particles = new List<Particle>();
         public int count=0;
 
         public int MousePositionX;

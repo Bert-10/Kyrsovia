@@ -17,17 +17,33 @@ namespace Repeat
         public abstract void ImpactParticle(Particle particle);
 
         // базовый класс для отрисовки точечки
-        public void Render(Graphics g)
+        public abstract void Render(Graphics g);
+       
+    }
+    public class Cirlce : IImpactPoint
+    {
+        public int R;
+        public Color pen;
+        public override void Render(Graphics g)
         {
-            g.FillEllipse(
-                    new SolidBrush(Color.Red),
-                    X - 5,
-                    Y - 5,
-                    10,
-                    10
-                );
+            g.DrawEllipse(new Pen(pen, 4), X-R/2, Y-R/2, R, R);
+        }
+
+        public override void ImpactParticle(Particle particle)
+        {
+            float gX = X - particle.X;
+            float gY = Y - particle.Y;
+            double r = Math.Sqrt(gX * gX + gY * gY); // считаем расстояние от центра точки до центра частицы
+            if (r + particle.Radius < R / 2) // если частица оказалось внутри окружности
+            {
+              //  particle.FromColor = pen;
+            }
+
+
         }
     }
+
+
     public class GravityPoint : IImpactPoint
     {
         public int Power = 100; // сила притяжения
@@ -41,6 +57,18 @@ namespace Repeat
 
             particle.SpeedX += gX * Power / r2;
             particle.SpeedY += gY * Power / r2;
+        }
+        public override void Render(Graphics g)
+        {
+            
+            g.FillEllipse(
+                    new SolidBrush(Color.Red),
+                    X - 5,
+                    Y - 5,
+                    10,
+                    10
+                );
+            
         }
     }
 
@@ -57,6 +85,18 @@ namespace Repeat
 
             particle.SpeedX -= gX * Power / r2; // тут минусики вместо плюсов
             particle.SpeedY -= gY * Power / r2; // и тут
+        }
+        public override void Render(Graphics g)
+        {
+
+            g.FillEllipse(
+                    new SolidBrush(Color.Red),
+                    X - 5,
+                    Y - 5,
+                    10,
+                    10
+                );
+
         }
     }
 }
