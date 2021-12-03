@@ -38,7 +38,8 @@ namespace Repeat
 
             if (r + particle.Radius < R / 2)  // если частица оказалось внутри окружности
             {
-                 particle.FromColor = pen;               
+                 particle.FromColor = pen;
+              //   particle.ToColor = pen;
             }
 
             /*

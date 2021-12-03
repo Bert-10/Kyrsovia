@@ -151,6 +151,7 @@ namespace Repeat
             particle.SpeedX = Particle.rand.Next(-2, 2); // разброс влево и вправа у частиц 
 
             particle.FromColor = Color.White;
+            particle.ToColor = Color.FromArgb(0, Color.Black);
 
             /*
             if  (particle is ParticleColorful) 

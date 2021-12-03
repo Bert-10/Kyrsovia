@@ -19,7 +19,7 @@ namespace Repeat
         List<Emitter> snowfall = new List<Emitter>();
         Emitter emitter;
         Emitter snow;
-
+        Cirlce cirlce1, cirlce2, cirlce3, cirlce4, cirlce5, cirlce6, cirlce7;
         public Form1()
         {
             InitializeComponent();
@@ -56,55 +56,62 @@ namespace Repeat
             snowfall.Add(snow);
 
 
-            snow.impactPoints.Add(new Cirlce
+            cirlce2= new Cirlce
             {
                 X = picDisplay.Width / 2 ,
                 Y = picDisplay.Height * 7 / 10,
                 R = 100,
                 pen=Color.Red
-            }) ;
-            snow.impactPoints.Add(new Cirlce
+            };
+            cirlce4 = new Cirlce
             {
                 X = picDisplay.Width / 4,
                 Y = picDisplay.Height*2 / 5,
                 R = 70,
                 pen = Color.Yellow
-            });
-            snow.impactPoints.Add(new Cirlce
+            };
+            cirlce3 = new Cirlce
             {
                 X = picDisplay.Width * 4 / 5+15,
                 Y = picDisplay.Height * 7 / 10,
                 R = 100,
                 pen = Color.Lime
-            });
-            snow.impactPoints.Add(new Cirlce
+            };
+            cirlce6 = new Cirlce
             {
                 X = picDisplay.Width * 3 / 4,
                 Y = picDisplay.Height*2 / 5,
                 R = 70,
                 pen = Color.OrangeRed
-            });
-            snow.impactPoints.Add(new Cirlce
+            };
+            cirlce7 = new Cirlce
             {
                 X = picDisplay.Width / 2,
                 Y = picDisplay.Height / 5,
-                R = 40,
+                R = 55,
                 pen = Color.Purple
-            });
-            snow.impactPoints.Add(new Cirlce
+            };
+            cirlce1 = new Cirlce
             {
                 X = picDisplay.Width / 5 - 10,
                 Y = picDisplay.Height * 7 / 10,
                 R = 100,
                 pen = Color.Blue
-            });
-            snow.impactPoints.Add(new Cirlce
+            };
+            cirlce5 = new Cirlce
             {
                 X = picDisplay.Width / 2,
                 Y = picDisplay.Height*2 / 5,
                 R = 70,
                 pen = Color.HotPink
-            });
+            };
+            snow.impactPoints.Add(cirlce1);
+            snow.impactPoints.Add(cirlce2);
+            snow.impactPoints.Add(cirlce3);
+            snow.impactPoints.Add(cirlce4);
+            snow.impactPoints.Add(cirlce5);
+            snow.impactPoints.Add(cirlce6);
+            snow.impactPoints.Add(cirlce7);
             /*
             emitter.impactPoints.Add(new GravityPoint
             {
@@ -168,7 +175,8 @@ namespace Repeat
                         break;
                     case 5:
                         snow.Render(g);
-                        task5(g);
+                       // task5(g);
+                        t5b = tbDirection.Value;
                         break;
                  }
                 
@@ -178,8 +186,8 @@ namespace Repeat
             picDisplay.Invalidate();
         }
 
-        private int MousePositionX = 0;
-        private int MousePositionY = 0;
+     //   private int MousePositionX = 0;
+      //  private int MousePositionY = 0;
 
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
@@ -203,6 +211,16 @@ namespace Repeat
                     break;
                 case 2:
                     emitter.Direction = tbDirection.Value;
+                    break;
+                case 5:
+                    cirlce7.Y = picDisplay.Height/5 + picDisplay.Height*3 /200 * tbDirection.Value;
+                    cirlce1.Y = picDisplay.Height*7 / 10 - picDisplay.Height / 40 * tbDirection.Value;
+                    cirlce2.Y = picDisplay.Height*7 / 10 - picDisplay.Height / 40 * tbDirection.Value;
+                    cirlce3.Y = picDisplay.Height*7 / 10 - picDisplay.Height / 40 * tbDirection.Value;
+                    cirlce4.Y = picDisplay.Height * 2 / 5 + picDisplay.Height*3 / 200 * tbDirection.Value;
+                    cirlce5.Y = picDisplay.Height * 2 / 5 + picDisplay.Height*3 / 200 * tbDirection.Value;
+                    cirlce6.Y = picDisplay.Height * 2 / 5 + picDisplay.Height*3 / 200 * tbDirection.Value;
+
                     break;
             }
             
@@ -231,7 +249,7 @@ namespace Repeat
         }
 
         int tbdValue1 = 100, tbdValue2=0,speedV1=10, speedV2 = 100;
-        int tb1=3, tb2=3;
+        int tb1=3, tb2=3,t5b=1;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -254,6 +272,11 @@ namespace Repeat
 
             emitter.SpeedMin = 5;
             emitter.SpeedMax = 20;
+
+            label2.Visible = true;
+            speedBar.Visible = true;
+            label4.Visible = true;
+            trackBar2.Visible = true;
 
             label3.Visible = false;
            // label4.Visible = false;
@@ -292,6 +315,8 @@ namespace Repeat
             emitter.X = picDisplay.Width / 2;
             emitter.Y = picDisplay.Height / 2;
 
+            label2.Visible = true;
+            speedBar.Visible = true;
             label3.Visible = true;
             label4.Visible = true;
             label5.Visible = true;
@@ -314,11 +339,25 @@ namespace Repeat
         {
             task = 5;
 
+            label1.Text = "Изменить положение кругов";
+
             snow.ParticlesPerTick =3;
             snow.ParticlesCount = 3000;
             snow.LifeMax =160;
 
+            label2.Visible = false;
+            label3.Visible = false;
+            label4.Visible = false;
+            label5.Visible = false;
+            label6.Visible = false;
+            trackBar1.Visible = false;
+            trackBar2.Visible = false;
+            trackBar3.Visible = false;
+            speedBar.Visible = false;
 
+            tbDirection.Maximum = 20;
+            tbDirection.Minimum = 1;
+            tbDirection.Value = t5b;
         }
 
         private void trackBar3_Scroll(object sender, EventArgs e)
@@ -362,8 +401,10 @@ namespace Repeat
         }
 
         double angle;
+        /*
         private void task5(Graphics g)
         {
+            t5b = tbDirection.Value;
             /*
             g.DrawEllipse(new Pen(Color.Red, 4), picDisplay.Width / 2-25, picDisplay.Height / 2-25 ,50 ,50 );
             g.DrawEllipse(new Pen(Color.Yellow, 4), picDisplay.Width / 4, picDisplay.Height / 8, 45, 45);
@@ -372,9 +413,9 @@ namespace Repeat
             g.DrawEllipse(new Pen(Color.Purple, 4), picDisplay.Width * 3 / 4-200, picDisplay.Height *3/ 4, 37, 37);
             g.DrawEllipse(new Pen(Color.Blue, 4), picDisplay.Width / 5-20, picDisplay.Height / 3, 100, 100);
             g.DrawEllipse(new Pen(Color.HotPink, 4), picDisplay.Width /2+200, picDisplay.Height / 8 , 40, 40);
-            */
+            
         }
-
+        */
         private void task2()
         {
              label6.Text= "Количество частиц "+ emitter.count;
@@ -391,7 +432,7 @@ namespace Repeat
             speedV1 = speedBar.Value;
             tb1 = trackBar2.Value;
 
-            g.DrawEllipse(new Pen(Color.LightCoral,4), picDisplay.Width / 2 - Xcirlce / 2, picDisplay.Height / 2 - Ycirlce / 2, Xcirlce, Ycirlce);
+            g.DrawEllipse(new Pen(Color.LightCoral,4), picDisplay.Width / 2 - Xcirlce / 2, picDisplay.Height / 2 - Ycirlce / 2+1, Xcirlce, Ycirlce);
             pos = pos + speed;
 
             emitter.X = (int)(picDisplay.Width / 2 + Xcirlce / 2 * Math.Cos(pos));
