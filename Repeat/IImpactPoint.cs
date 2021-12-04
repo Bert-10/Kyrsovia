@@ -74,10 +74,17 @@ namespace Repeat
             float gY = Y - particle.Y;
             double r = Math.Sqrt(gX * gX + gY * gY); // считаем расстояние от центра точки до центра частицы
 
-            if (r + particle.Radius < R / 2)  // если частица оказалось внутри окружности
+            //  if (r + particle.Radius < R / 2)  // если частица оказалось внутри окружности
+            if (particle.Radius+R>r)
             {
                 particle.X = X2;
                 particle.Y = Y2;
+
+                particle.SpeedX = -particle.SpeedX;
+                particle.SpeedY = -particle.SpeedY;
+
+
+              //  particle.SpeedX = tbDirection.Value;
             }
 
 

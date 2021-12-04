@@ -26,7 +26,10 @@ namespace Repeat
             InitializeComponent();
             // привязал изображение
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
-         //   /*
+            //   /*
+
+          //  picDisplay.MouseClick += picDisplay_RightMouseClick;
+
             snow = new TopEmitter
             {
                 Width = picDisplay.Width,
@@ -39,11 +42,11 @@ namespace Repeat
             {
                 Direction = 0,
                 Spreading = 10,
-                SpeedMin = 1,
-                SpeedMax = 10,
+                SpeedMin = 5,
+                SpeedMax = 20,
                 //       ColorFrom = Color.Gold,
-                ColorFrom = Color.DarkRed,
-                ColorTo = Color.FromArgb(0, Color.AliceBlue),
+                ColorFrom = Color.Red,
+                ColorTo = Color.FromArgb(0, Color.Yellow),
                 ParticlesPerTick = 3,
                 X = picDisplay.Width / 2,
                 Y = picDisplay.Height / 5,
@@ -54,7 +57,7 @@ namespace Repeat
             {
                 X = picDisplay.Width / 2,
                 Y = picDisplay.Height / 2,
-                R = 40,
+                R = 75,
                 X2 = picDisplay.Width / 2,
                 Y2 = picDisplay.Height * 7 / 10,
             };
@@ -67,9 +70,11 @@ namespace Repeat
                 Spreading = 10,
                 SpeedMin = 10,
                 SpeedMax = 10,
-          //       ColorFrom = Color.Gold,
+                //       ColorFrom = Color.Gold,
                 ColorFrom = Color.BlueViolet,
                 ColorTo = Color.FromArgb(0, Color.AliceBlue),
+              //  ColorFrom = Color.Pink,
+              //  ColorTo = Color.FromArgb(0, Color.),
                 ParticlesPerTick = 1,
                 X = picDisplay.Width / 2,
                 Y = picDisplay.Height / 2+ Ycirlce/2,
@@ -283,9 +288,18 @@ namespace Repeat
 
         private void picDisplay_MouseClick(object sender, MouseEventArgs e)
         {
-
+            if ((e.Button == MouseButtons.Left)&(task == 4))
+            {
+                tp.X = e.X;
+                tp.Y = e.Y;
+            }
+            if ((e.Button == MouseButtons.Right)&(task == 4))
+            {
+                tp.X2 = e.X;
+                tp.Y2 = e.Y;
+            }
         }
-
+       
         private void button4_Click(object sender, EventArgs e)
         {
             task = 4;
@@ -342,8 +356,9 @@ namespace Repeat
             //  emitter.ParticlesPerTick = 3;
             emitter.ParticlesPerTick = tb1;
             emitter.SpeedMax = 20;
-        
 
+            emitter.ColorFrom = Color.BlueViolet;
+            emitter.ColorTo = Color.FromArgb(0, Color.AliceBlue);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -383,6 +398,8 @@ namespace Repeat
             emitter.Spreading = speedBar.Value;
             emitter.Direction = tbDirection.Value;
 
+            emitter.ColorFrom = Color.Gold;
+            emitter.ColorTo = Color.FromArgb(0, Color.Orange);
         }
 
         int Xvector1, Xvector2, Yvector1, Yvector2;

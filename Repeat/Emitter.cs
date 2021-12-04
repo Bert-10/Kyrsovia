@@ -119,7 +119,10 @@ namespace Repeat
             particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
 
             particle.Radius = Particle.rand.Next(RadiusMin, RadiusMax);
-         
+
+            //--
+            particle.FromColor = ColorFrom;
+            particle.ToColor = ColorTo;
         }
 
         public virtual Particle CreateParticle()
