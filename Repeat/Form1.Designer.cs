@@ -30,6 +30,7 @@ namespace Repeat
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.picDisplay = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tbDirection = new System.Windows.Forms.TrackBar();
@@ -46,6 +47,7 @@ namespace Repeat
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbDirection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.speedBar)).BeginInit();
@@ -63,6 +65,7 @@ namespace Repeat
             this.picDisplay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
+            this.picDisplay.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picDisplay_MouseClick);
             this.picDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picDisplay_MouseMove);
             // 
             // timer1
@@ -73,6 +76,7 @@ namespace Repeat
             // 
             // tbDirection
             // 
+            this.tbDirection.BackColor = System.Drawing.SystemColors.Control;
             this.tbDirection.Location = new System.Drawing.Point(382, 50);
             this.tbDirection.Maximum = 300;
             this.tbDirection.Minimum = 100;
@@ -85,7 +89,8 @@ namespace Repeat
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(391, 34);
+            this.label1.BackColor = System.Drawing.SystemColors.Control;
+            this.label1.Location = new System.Drawing.Point(385, 34);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 2;
@@ -94,7 +99,8 @@ namespace Repeat
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(391, 82);
+            this.label2.BackColor = System.Drawing.SystemColors.Control;
+            this.label2.Location = new System.Drawing.Point(385, 82);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(55, 13);
             this.label2.TabIndex = 3;
@@ -102,6 +108,7 @@ namespace Repeat
             // 
             // speedBar
             // 
+            this.speedBar.BackColor = System.Drawing.SystemColors.Control;
             this.speedBar.Location = new System.Drawing.Point(382, 98);
             this.speedBar.Maximum = 30;
             this.speedBar.Minimum = 10;
@@ -114,6 +121,7 @@ namespace Repeat
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.SystemColors.Control;
             this.label3.Location = new System.Drawing.Point(385, 238);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(55, 13);
@@ -143,6 +151,7 @@ namespace Repeat
             // 
             // trackBar1
             // 
+            this.trackBar1.BackColor = System.Drawing.SystemColors.Control;
             this.trackBar1.Location = new System.Drawing.Point(382, 254);
             this.trackBar1.Maximum = 40;
             this.trackBar1.Minimum = 11;
@@ -155,6 +164,7 @@ namespace Repeat
             // 
             // trackBar2
             // 
+            this.trackBar2.BackColor = System.Drawing.SystemColors.Control;
             this.trackBar2.Location = new System.Drawing.Point(382, 142);
             this.trackBar2.Minimum = 1;
             this.trackBar2.Name = "trackBar2";
@@ -165,6 +175,7 @@ namespace Repeat
             // 
             // trackBar3
             // 
+            this.trackBar3.BackColor = System.Drawing.SystemColors.Control;
             this.trackBar3.Location = new System.Drawing.Point(382, 190);
             this.trackBar3.Maximum = 250;
             this.trackBar3.Minimum = 40;
@@ -178,7 +189,8 @@ namespace Repeat
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(391, 126);
+            this.label4.BackColor = System.Drawing.SystemColors.Control;
+            this.label4.Location = new System.Drawing.Point(385, 126);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(132, 13);
             this.label4.TabIndex = 11;
@@ -187,6 +199,7 @@ namespace Repeat
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.SystemColors.Control;
             this.label5.Location = new System.Drawing.Point(385, 174);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(146, 13);
@@ -197,6 +210,7 @@ namespace Repeat
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.SystemColors.Control;
             this.label6.Location = new System.Drawing.Point(385, 286);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(61, 13);
@@ -206,7 +220,7 @@ namespace Repeat
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(131, -2);
+            this.button5.Location = new System.Drawing.Point(192, -2);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(67, 41);
             this.button5.TabIndex = 14;
@@ -214,11 +228,22 @@ namespace Repeat
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(129, -2);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(67, 41);
+            this.button4.TabIndex = 15;
+            this.button4.Text = "Задание 4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(583, 578);
+            this.ClientSize = new System.Drawing.Size(583, 567);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -234,8 +259,9 @@ namespace Repeat
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbDirection);
             this.Controls.Add(this.picDisplay);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Particle System";
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbDirection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.speedBar)).EndInit();
@@ -265,6 +291,7 @@ namespace Repeat
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
     }
 }
 

@@ -15,11 +15,12 @@ namespace Repeat
     {
         //List<Particle> particles = new List<Particle>();
         public int task = 1;
-        List<Emitter> emitters = new List<Emitter>();
-        List<Emitter> snowfall = new List<Emitter>();
-        Emitter emitter;
+      //  List<Emitter> emitters = new List<Emitter>();
+      //  List<Emitter> snowfall = new List<Emitter>();
+        Emitter emitter,emitter2;
         Emitter snow;
         Cirlce cirlce1, cirlce2, cirlce3, cirlce4, cirlce5, cirlce6, cirlce7;
+        Teleport tp;
         public Form1()
         {
             InitializeComponent();
@@ -34,26 +35,48 @@ namespace Repeat
              //   ColorFrom = Color.Gold,
              //  ColorTo = Color.FromArgb(0, Color.AliceBlue),
             };
+            emitter2 = new Emitter // создаю эмиттер и привязываю его к полю emitter
+            {
+                Direction = 0,
+                Spreading = 10,
+                SpeedMin = 1,
+                SpeedMax = 10,
+                //       ColorFrom = Color.Gold,
+                ColorFrom = Color.DarkRed,
+                ColorTo = Color.FromArgb(0, Color.AliceBlue),
+                ParticlesPerTick = 3,
+                X = picDisplay.Width / 2,
+                Y = picDisplay.Height / 5,
 
-         //   */
+            };
 
-          //  /*
-            this.emitter = new Emitter // создаю эмиттер и привязываю его к полю emitter
+            tp = new Teleport
+            {
+                X = picDisplay.Width / 2,
+                Y = picDisplay.Height / 2,
+                R = 40,
+                X2 = picDisplay.Width / 2,
+                Y2 = picDisplay.Height * 7 / 10,
+            };
+
+            emitter2.impactPoints.Add(tp);
+
+            emitter = new Emitter // создаю эмиттер и привязываю его к полю emitter
             {
                 Direction = 0,
                 Spreading = 10,
                 SpeedMin = 10,
                 SpeedMax = 10,
           //       ColorFrom = Color.Gold,
-                ColorFrom = Color.Pink,
+                ColorFrom = Color.BlueViolet,
                 ColorTo = Color.FromArgb(0, Color.AliceBlue),
-                ParticlesPerTick = 10,
+                ParticlesPerTick = 1,
                 X = picDisplay.Width / 2,
                 Y = picDisplay.Height / 2+ Ycirlce/2,
             };
          //   */
-            emitters.Add(this.emitter);
-            snowfall.Add(snow);
+          //  emitters.Add(this.emitter);
+         //   snowfall.Add(snow);
 
 
             cirlce2= new Cirlce
@@ -139,16 +162,21 @@ namespace Repeat
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (task != 5)
+            switch (task)
             {
-                emitter.UpdateState(); // каждый тик обновляем систему
+                case 1:
+                    emitter.UpdateState();// каждый тик обновляем систему
+                    break;
+                case 2:
+                    emitter.UpdateState();
+                    break;
+                case 4:
+                    emitter2.UpdateState();
+                    break;
+                case 5:
+                    snow.UpdateState();
+                    break;
             }
-            
-            if (task == 5)
-            {
-                snow.UpdateState();
-            }
-           
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
@@ -172,6 +200,9 @@ namespace Repeat
                      case 2:
                          task2();
                         emitter.Render(g);
+                        break;
+                    case 4:
+                        emitter2.Render(g);
                         break;
                     case 5:
                         snow.Render(g);
@@ -249,7 +280,28 @@ namespace Repeat
         }
 
         int tbdValue1 = 100, tbdValue2=0,speedV1=10, speedV2 = 100;
-        int tb1=3, tb2=3,t5b=1;
+
+        private void picDisplay_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            task = 4;
+            /*
+            emitter.X = picDisplay.Width / 2;
+            emitter.Y = picDisplay.Height / 5;
+            
+            emitter.Direction = 0;
+            emitter.Spreading = 0;
+            emitter.SpeedMax = 10;
+            emitter.LifeMax = 100;
+            emitter.ParticlesPerTick = 3;
+            */
+        }
+
+        int tb1 =3, tb2=3,t5b=1;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -466,18 +518,7 @@ namespace Repeat
             }
             emitter.Spreading = 100;
 
-           // label3.Text = angle.ToString();                    
-            /*
-            Pen pen = new Pen(Color.Red, 3);          
-            Point[] points =
-                     {
-                 new Point(picDisplay.Width/2, picDisplay.Height/2),
-                 new Point(emitter.X, emitter.Y),
-                 new Point(emitter.Y-5, emitter.Y),
-             };
-            g.DrawLines(pen, points);
-            */
-
+           
         }
 
     }
