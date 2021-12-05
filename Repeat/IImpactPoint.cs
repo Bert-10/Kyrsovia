@@ -46,7 +46,9 @@ namespace Repeat
         }
     }
 
-    public class Teleport : IImpactPoint
+    
+
+        public class Teleport : IImpactPoint
     {
         public int R,X2,Y2;
        // public Color pen;
@@ -80,12 +82,48 @@ namespace Repeat
                 particle.X = X2;
                 particle.Y = Y2;
 
-                particle.SpeedX = -particle.SpeedX;
-                particle.SpeedY = -particle.SpeedY;
+                 particle.SpeedX = -particle.SpeedX;
+                 particle.SpeedY = -particle.SpeedY;
+                //     particle.SpeedX = (float)(Math.Cos( / 180 * Math.PI)* particle.speed);
+                //     particle.SpeedY =-(float)(Math.Sin( / 180 * Math.PI)* particle.speed);
 
-
-              //  particle.SpeedX = tbDirection.Value;
+                //  particle.SpeedX = tbDirection.Value;
             }
+
+
+        }
+    }
+
+    public class Radar : IImpactPoint
+    {
+        public int R,counter=0;
+        public override void Render(Graphics g)
+        {
+            //вход
+            g.DrawEllipse(new Pen(Color.Black, 4), X - R / 2, Y - R / 2, R, R);
+            var stringFormat = new StringFormat(); // создаем экземпляр класса
+            stringFormat.Alignment = StringAlignment.Center; // выравнивание по горизонтали
+            stringFormat.LineAlignment = StringAlignment.Center; // выравнивание по вертикали
+
+            g.DrawString( $"{counter}",new Font("Verdana", 20), new SolidBrush(Color.Red), X, Y,stringFormat);
+
+        }
+
+        public override void ImpactParticle(Particle particle)
+        {
+            float gX = X - particle.X;
+            float gY = Y - particle.Y;
+            double r = Math.Sqrt(gX * gX + gY * gY); // считаем расстояние от центра точки до центра частицы
+
+            particle.FromColor = Color.Gold;
+            particle.ToColor = Color.FromArgb(0, Color.Red);
+
+            if (r + particle.Radius < R / 2)  // если частица оказалось внутри окружности            
+              {
+                particle.FromColor = Color.Black;
+                particle.ToColor = Color.FromArgb(0, Color.Black);
+                counter++;
+              }
 
 
         }

@@ -13,8 +13,8 @@ namespace Repeat
       //public static List<Particle> particles = new List<Particle>();
         public int count=0;
 
-        public int MousePositionX;
-        public int MousePositionY;
+     //   public int MousePositionX;
+    //    public int MousePositionY;
         public float GravitationX = 0;
         public float GravitationY = 1;       
         public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
@@ -100,6 +100,7 @@ namespace Repeat
             {              
                 point.Render(g); 
             }
+
         }
 
         public virtual void ResetParticle(Particle particle)
@@ -109,17 +110,26 @@ namespace Repeat
             particle.X = X;
             particle.Y = Y;
 
+          //  /*
             var direction = Direction
                 + (double)Particle.rand.Next(Spreading)
                 - Spreading / 2;
 
             var speed = Particle.rand.Next(SpeedMin, SpeedMax);
-
+            
             particle.SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
             particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
+            //   */
 
+            /*
+               particle.direction = Direction+ Particle.rand.Next(Spreading)- Spreading / 2;
+               particle.speed = Particle.rand.Next(SpeedMin, SpeedMax);
+
+               particle.SpeedX = (float)(Math.Cos(particle.direction / 180 * Math.PI) * particle.speed);
+               particle.SpeedY = -(float)(Math.Sin(particle.direction / 180 * Math.PI) * particle.speed);
+            */
             particle.Radius = Particle.rand.Next(RadiusMin, RadiusMax);
-
+         
             //--
             particle.FromColor = ColorFrom;
             particle.ToColor = ColorTo;

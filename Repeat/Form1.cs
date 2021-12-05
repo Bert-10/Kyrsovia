@@ -17,10 +17,11 @@ namespace Repeat
         public int task = 1;
       //  List<Emitter> emitters = new List<Emitter>();
       //  List<Emitter> snowfall = new List<Emitter>();
-        Emitter emitter,emitter2;
+        Emitter emitter,emitter2, emitter8;
         Emitter snow;
         Cirlce cirlce1, cirlce2, cirlce3, cirlce4, cirlce5, cirlce6, cirlce7;
         Teleport tp;
+        Radar rad;
         public Form1()
         {
             InitializeComponent();
@@ -28,7 +29,34 @@ namespace Repeat
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
             //   /*
 
-          //  picDisplay.MouseClick += picDisplay_RightMouseClick;
+            //  picDisplay.MouseClick += picDisplay_RightMouseClick;
+            rad = new Radar
+            {
+                X = picDisplay.Width+200,
+                Y = picDisplay.Height+200,
+                R = 75,              
+            };
+
+            emitter8 = new Emitter
+            {
+                Direction = 90,
+                Spreading = 90,
+                SpeedMin = 8,
+                SpeedMax = 15,
+                ParticlesPerTick = 10,
+                LifeMax=120,
+
+                //       ColorFrom = Color.Gold,
+                ColorFrom = Color.Gold,
+                ColorTo = Color.FromArgb(0, Color.Red),
+          
+                X = picDisplay.Width / 2,
+                Y = picDisplay.Height / 2,
+
+            };
+
+            emitter8.impactPoints.Add(rad);
+
 
             snow = new TopEmitter
             {
@@ -70,7 +98,7 @@ namespace Repeat
                 Spreading = 10,
                 SpeedMin = 10,
                 SpeedMax = 10,
-                //       ColorFrom = Color.Gold,
+             //   ColorFrom = Color.Gold,
                 ColorFrom = Color.BlueViolet,
                 ColorTo = Color.FromArgb(0, Color.AliceBlue),
               //  ColorFrom = Color.Pink,
@@ -181,6 +209,11 @@ namespace Repeat
                 case 5:
                     snow.UpdateState();
                     break;
+                case 8:
+                    rad.counter = 0;
+                    emitter8.UpdateState();
+                   
+                    break;
             }
 
             using (var g = Graphics.FromImage(picDisplay.Image))
@@ -214,6 +247,10 @@ namespace Repeat
                        // task5(g);
                         t5b = tbDirection.Value;
                         break;
+                    case 8:
+                        emitter8.Render(g);
+
+                        break;
                  }
                 
               
@@ -227,8 +264,12 @@ namespace Repeat
 
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
-            emitter.MousePositionX = e.X;
-            emitter.MousePositionY = e.Y;
+            if (task == 8)
+            {
+                rad.X = e.X;
+                rad.Y = e.Y;
+            }        
+
         }
 
 
@@ -286,6 +327,23 @@ namespace Repeat
 
         int tbdValue1 = 100, tbdValue2=0,speedV1=10, speedV2 = 100;
 
+        private void button8_Click(object sender, EventArgs e)
+        {
+            task = 8;
+
+            label2.Visible = false;
+            speedBar.Visible = false;
+            label4.Visible = false;
+            label3.Visible = false;
+            label5.Visible = false;
+            label6.Visible = false;
+            trackBar1.Visible = false;
+            trackBar2.Visible = false;
+            trackBar3.Visible = false;
+
+
+        }
+
         private void picDisplay_MouseClick(object sender, MouseEventArgs e)
         {
             if ((e.Button == MouseButtons.Left)&(task == 4))
@@ -313,6 +371,22 @@ namespace Repeat
             emitter.LifeMax = 100;
             emitter.ParticlesPerTick = 3;
             */
+
+            label1.Text = "Направление";
+            tbDirection.Maximum = 359;
+            tbDirection.Minimum = 0;
+            tbDirection.Value = 180;
+
+            label2.Visible = false;
+            speedBar.Visible = false;
+            label4.Visible = false;
+            label3.Visible = false;
+            label5.Visible = false;
+            label6.Visible = false;
+            trackBar1.Visible = false;
+            trackBar2.Visible = false;
+            trackBar3.Visible = false;
+
         }
 
         int tb1 =3, tb2=3,t5b=1;
@@ -398,8 +472,8 @@ namespace Repeat
             emitter.Spreading = speedBar.Value;
             emitter.Direction = tbDirection.Value;
 
-            emitter.ColorFrom = Color.Gold;
-            emitter.ColorTo = Color.FromArgb(0, Color.Orange);
+            emitter.ColorFrom = Color.Blue;
+            emitter.ColorTo = Color.FromArgb(0, Color.DarkBlue);
         }
 
         int Xvector1, Xvector2, Yvector1, Yvector2;

@@ -15,6 +15,7 @@ namespace Repeat
         public float SpeedX; // скорость перемещения по оси X
         public float SpeedY; // скорость перемещения по оси Y
         public float Life;
+       // public float direction,speed;
 
         public static Random rand = new Random();
 
