@@ -27,9 +27,8 @@ namespace Repeat
             InitializeComponent();
             // привязал изображение
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
-            //   /*
+            picDisplay.MouseWheel += picDisplay_MouseWheel;
 
-            //  picDisplay.MouseClick += picDisplay_RightMouseClick;
             rad = new Radar
             {
                 X = picDisplay.Width+200,
@@ -272,6 +271,27 @@ namespace Repeat
 
         }
 
+        private void picDisplay_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (task == 8)
+            {
+                if (e.Delta > 0) 
+                { 
+                    rad.R = rad.R + 5; 
+                }
+                    
+                else 
+                {
+                    if (rad.R > 30) 
+                    { 
+                        rad.R = rad.R - 5;
+                    }
+                    
+                }
+                    
+            }
+           
+        }
 
         int Xcirlce=100;
         int Ycirlce=100;
