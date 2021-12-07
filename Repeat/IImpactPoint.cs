@@ -20,6 +20,7 @@ namespace Repeat
         public abstract void Render(Graphics g);
        
     }
+    //класс круг. Нужен для 5 задания. Если частица попадает в зону круга, то меняет цвет, на цвет круга
     public class Cirlce : IImpactPoint
     {
         public int R;
@@ -47,7 +48,7 @@ namespace Repeat
     }
 
     
-
+    //класс телепорт. Нужен для 4 задания. 
         public class Teleport : IImpactPoint
     {
         public int R,X2,Y2;
@@ -58,7 +59,7 @@ namespace Repeat
             g.DrawEllipse(new Pen(Color.Blue, 4), X - R / 2, Y - R / 2, R, R);
             //выход
             g.DrawEllipse(new Pen(Color.Red, 4), X2 - R / 2, Y2 - R / 2, R, R);
-           
+           //линия, которая соединяет телепорты (только для красоты нужна)
             Pen pen = new Pen(Color.Green, 4);
             Point[] points =
                      {
@@ -79,9 +80,10 @@ namespace Repeat
             //  if (r + particle.Radius < R / 2)  // если частица оказалось внутри окружности
             if (particle.Radius+R>r)
             {
+                //меняем координаты частицы
                 particle.X = X2;
                 particle.Y = Y2;
-
+                //задаём направление противоположное начальному
                  particle.SpeedX = -particle.SpeedX;
                  particle.SpeedY = -particle.SpeedY;
                 //     particle.SpeedX = (float)(Math.Cos( / 180 * Math.PI)* particle.speed);
@@ -94,17 +96,18 @@ namespace Repeat
         }
     }
 
+    //класс радар. Нужен для 8 задания. Подсвечивает все частицы в зоне действия
     public class Radar : IImpactPoint
     {
         public int R,counter=0;
         public override void Render(Graphics g)
         {
-            //вход
+            
             g.DrawEllipse(new Pen(Color.Black, 4), X - R / 2, Y - R / 2, R, R);
             var stringFormat = new StringFormat(); // создаем экземпляр класса
             stringFormat.Alignment = StringAlignment.Center; // выравнивание по горизонтали
             stringFormat.LineAlignment = StringAlignment.Center; // выравнивание по вертикали
-
+            //выводим количество частиц
             g.DrawString( $"{counter}",new Font("Verdana", 20), new SolidBrush(Color.Red), X, Y,stringFormat);
 
         }
@@ -114,14 +117,16 @@ namespace Repeat
             float gX = X - particle.X;
             float gY = Y - particle.Y;
             double r = Math.Sqrt(gX * gX + gY * gY); // считаем расстояние от центра точки до центра частицы
-
+            //меняем цвет частицы на исходный
             particle.FromColor = Color.Gold;
             particle.ToColor = Color.FromArgb(0, Color.Red);
 
             if (r + particle.Radius < R / 2)  // если частица оказалось внутри окружности            
               {
+                //меняем её цвет
                 particle.FromColor = Color.Black;
                 particle.ToColor = Color.FromArgb(0, Color.Black);
+                //увеличиваем счётчик
                 counter++;
               }
 

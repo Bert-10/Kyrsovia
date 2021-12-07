@@ -28,20 +28,20 @@ namespace Repeat
             // привязал изображение
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
             picDisplay.MouseWheel += picDisplay_MouseWheel;
-
+            //радар
             rad = new Radar
             {
                 X = picDisplay.Width+200,
                 Y = picDisplay.Height+200,
                 R = 75,              
             };
-
+            //емитер 8 задания
             emitter8 = new Emitter
             {
                 Direction = 90,
                 Spreading = 90,
                 SpeedMin = 8,
-                SpeedMax = 15,
+                SpeedMax = 25,
                 ParticlesPerTick = 10,
                 LifeMax=120,
 
@@ -56,7 +56,7 @@ namespace Repeat
 
             emitter8.impactPoints.Add(rad);
 
-
+            //емитер снега для 5 задания
             snow = new TopEmitter
             {
                 Width = picDisplay.Width,
@@ -65,7 +65,7 @@ namespace Repeat
              //   ColorFrom = Color.Gold,
              //  ColorTo = Color.FromArgb(0, Color.AliceBlue),
             };
-            emitter2 = new Emitter // создаю эмиттер и привязываю его к полю emitter
+            emitter2 = new Emitter 
             {
                 Direction = 0,
                 Spreading = 10,
@@ -79,7 +79,7 @@ namespace Repeat
                 Y = picDisplay.Height / 5,
 
             };
-
+            //теплепорт
             tp = new Teleport
             {
                 X = picDisplay.Width / 2,
@@ -110,7 +110,7 @@ namespace Repeat
           //  emitters.Add(this.emitter);
          //   snowfall.Add(snow);
 
-
+            //создание кругов для 5 задания
             cirlce2= new Cirlce
             {
                 X = picDisplay.Width / 2 ,
@@ -194,6 +194,7 @@ namespace Repeat
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            //в зависимости от задания обновляем соответствующий эмитер
             switch (task)
             {
                 case 1:
@@ -217,18 +218,10 @@ namespace Repeat
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
-
+                //тут заливка формы полностью прозрачным цветом
                    g.Clear(Color.FromArgb(0, 0, 0, 0));
-                //  picDisplay.Image = null;
-             //   picDisplay.InitialImage = null;
-                //    picDisplay.BackgroundImage = Properties.Resources.handsome;                
-                 //  picDisplay.Image = Properties.Resources.handsome;
-
-              //  emitter.Render(g); // рендерим систему
-
-               // snow.Render(g);
-
-                 switch (task)
+                //в зависимости от задания отрисовываем соответствующий эмитер
+                switch (task)
                  {
                      case 1:
                          task1(g);
@@ -247,8 +240,17 @@ namespace Repeat
                         t5b = tbDirection.Value;
                         break;
                     case 8:
-                        emitter8.Render(g);
-
+                        if (Math.Pow(emitter8.X- rad.X, 2) + Math.Pow(emitter8.Y- rad.Y, 2) < Math.Pow(rad.R / 2, 2))
+                        {
+                            emitter8.ColorFrom = Color.Black; ;
+                            emitter8.ColorTo = Color.FromArgb(0, Color.Black);
+                        }
+                        else
+                        {
+                            emitter8.ColorFrom = Color.Gold;
+                            emitter8.ColorTo = Color.FromArgb(0, Color.Red);
+                        }
+                        emitter8.Render(g);                       
                         break;
                  }
                 
@@ -260,9 +262,10 @@ namespace Repeat
 
      //   private int MousePositionX = 0;
       //  private int MousePositionY = 0;
-
+      //если задание 8, то передаём радару координаты мышки
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
+
             if (task == 8)
             {
                 rad.X = e.X;
@@ -270,7 +273,7 @@ namespace Repeat
             }        
 
         }
-
+        //если задание 8, то меняем радиус радара от прокрутки мыши
         private void picDisplay_MouseWheel(object sender, MouseEventArgs e)
         {
             if (task == 8)
@@ -282,6 +285,7 @@ namespace Repeat
                     
                 else 
                 {
+                    //минимальный радиус для предотвращения вырождения круга
                     if (rad.R > 30) 
                     { 
                         rad.R = rad.R - 5;
@@ -303,6 +307,7 @@ namespace Repeat
             switch (task)
             {
                 case 1:
+                    //меням радиус круга от тракбара (1задание)
                     Xcirlce = tbDirection.Value;
                     Ycirlce = Xcirlce;
                     break;
@@ -310,6 +315,7 @@ namespace Repeat
                     emitter.Direction = tbDirection.Value;
                     break;
                 case 5:
+                  //  двигаем круги от тракбара (5задание)
                     cirlce7.Y = picDisplay.Height/5 + picDisplay.Height*3 /200 * tbDirection.Value;
                     cirlce1.Y = picDisplay.Height*7 / 10 - picDisplay.Height / 40 * tbDirection.Value;
                     cirlce2.Y = picDisplay.Height*7 / 10 - picDisplay.Height / 40 * tbDirection.Value;
@@ -349,9 +355,13 @@ namespace Repeat
 
         private void button8_Click(object sender, EventArgs e)
         {
+            Size = new Size(391, 597);
+
             task = 8;
 
             label2.Visible = false;
+            label1.Visible = false;
+            tbDirection.Visible = false;
             speedBar.Visible = false;
             label4.Visible = false;
             label3.Visible = false;
@@ -363,7 +373,7 @@ namespace Repeat
 
 
         }
-
+        //ЛКМ меняются координаты входа. ПКМ меняются координаты выхода
         private void picDisplay_MouseClick(object sender, MouseEventArgs e)
         {
             if ((e.Button == MouseButtons.Left)&(task == 4))
@@ -381,6 +391,7 @@ namespace Repeat
         private void button4_Click(object sender, EventArgs e)
         {
             task = 4;
+            Size = new Size(391, 597);
             /*
             emitter.X = picDisplay.Width / 2;
             emitter.Y = picDisplay.Height / 5;
@@ -392,11 +403,17 @@ namespace Repeat
             emitter.ParticlesPerTick = 3;
             */
 
+            //   Form.Width = 100;
+
             label1.Text = "Направление";
             tbDirection.Maximum = 359;
             tbDirection.Minimum = 0;
             tbDirection.Value = 180;
 
+            //  label1.Visible = true;
+            // tbDirection.Visible = true;
+            label1.Visible = false;
+            tbDirection.Visible = false;
             label2.Visible = false;
             speedBar.Visible = false;
             label4.Visible = false;
@@ -413,7 +430,8 @@ namespace Repeat
 
         private void button1_Click(object sender, EventArgs e)
         {
-           // int tbdValue = 10;
+            // int tbdValue = 10;
+            Size = new Size(573, 606);
             task = 1;
             tbDirection.Maximum = 300;
             tbDirection.Minimum = 100;
@@ -433,6 +451,8 @@ namespace Repeat
             emitter.SpeedMin = 5;
             emitter.SpeedMax = 20;
 
+            label1.Visible = true;
+            tbDirection.Visible = true;
             label2.Visible = true;
             speedBar.Visible = true;
             label4.Visible = true;
@@ -457,6 +477,7 @@ namespace Repeat
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Size = new Size(573, 606);
             task = 2;
             tbDirection.Maximum = 359;
             tbDirection.Minimum = 0;
@@ -476,6 +497,8 @@ namespace Repeat
             emitter.X = picDisplay.Width / 2;
             emitter.Y = picDisplay.Height / 2;
 
+            label1.Visible = true;
+            tbDirection.Visible = true;
             label2.Visible = true;
             speedBar.Visible = true;
             label3.Visible = true;
@@ -500,6 +523,7 @@ namespace Repeat
 
         private void button5_Click(object sender, EventArgs e)
         {
+            Size = new Size(573, 606);
             task = 5;
 
             label1.Text = "Изменить положение кругов";
@@ -508,6 +532,8 @@ namespace Repeat
             snow.ParticlesCount = 3000;
             snow.LifeMax =160;
 
+            label1.Visible = true;
+            tbDirection.Visible = true;
             label2.Visible = false;
             label3.Visible = false;
             label4.Visible = false;
@@ -579,6 +605,7 @@ namespace Repeat
             
         }
         */
+        //выводим количество частиц во 2 задании
         private void task2()
         {
              label6.Text= "Количество частиц "+ emitter.count;
@@ -587,7 +614,8 @@ namespace Repeat
             speedV2 = speedBar.Value;
             tb2= trackBar2.Value;
         }
-
+        //отрисовка окружности для 1 задания а так же подсчёт угла касательной, чтобы развернуть 
+        //направление разброса частиц
         private void task1(Graphics g)
         {
             //emitter.GravitationY = (float)(0.5);
@@ -610,7 +638,7 @@ namespace Repeat
             Xvector2 = 5 - emitter.Y;
             //  angle = (180 /Math.PI)*Math.Acos(Math.Cos((Yvector1*Yvector2)/(Math.Sqrt(Math.Pow(Yvector2, 2) )* Math.Sqrt(Math.Pow(Xvector1,2)+ Math.Pow(Yvector1, 2)))));
             angle = (290 / Math.PI) * Math.Acos(Math.Cos((Yvector1 * Yvector2 + Xvector2 * Xvector1) / (Math.Sqrt(Math.Pow(Yvector2, 2) + Math.Pow(Xvector2, 2)) * Math.Sqrt(Math.Pow(Xvector1, 2) + Math.Pow(Yvector1, 2)))));
-            
+            //в зависимости от четверти оркужности задаём определённый угл поворота
             if (emitter.X < picDisplay.Width / 2 & emitter.Y > picDisplay.Height / 2) 
             { 
             emitter.Direction = -(int)(angle);
