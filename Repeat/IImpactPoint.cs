@@ -77,8 +77,8 @@ namespace Repeat
             float gY = Y - particle.Y;
             double r = Math.Sqrt(gX * gX + gY * gY); // считаем расстояние от центра точки до центра частицы
 
-            //  if (r + particle.Radius < R / 2)  // если частица оказалось внутри окружности
-            if (particle.Radius+R>r)
+              if (r + particle.Radius < R / 2)  // если частица оказалось внутри окружности
+         //   if (particle.Radius+R>r)
             {
                 //меняем координаты частицы
                 particle.X = X2;

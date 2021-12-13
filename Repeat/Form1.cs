@@ -98,11 +98,13 @@ namespace Repeat
                 SpeedMin = 10,
                 SpeedMax = 10,
              //   ColorFrom = Color.Gold,
-                ColorFrom = Color.BlueViolet,
-                ColorTo = Color.FromArgb(0, Color.AliceBlue),
-              //  ColorFrom = Color.Pink,
-              //  ColorTo = Color.FromArgb(0, Color.),
-                ParticlesPerTick = 1,
+                //ColorFrom = Color.BlueViolet,
+               // ColorTo = Color.FromArgb(0, Color.AliceBlue),
+                ColorFrom = Color.Gold,
+                ColorTo = Color.FromArgb(0, Color.Red),
+            //  ColorFrom = Color.Pink,
+            //  ColorTo = Color.FromArgb(0, Color.),
+            ParticlesPerTick = 1,
                 X = picDisplay.Width / 2,
                 Y = picDisplay.Height / 2+ Ycirlce/2,
             };
@@ -471,8 +473,8 @@ namespace Repeat
             emitter.ParticlesPerTick = tb1;
             emitter.SpeedMax = 20;
 
-            emitter.ColorFrom = Color.BlueViolet;
-            emitter.ColorTo = Color.FromArgb(0, Color.AliceBlue);
+            emitter.ColorFrom = Color.Gold;
+            emitter.ColorTo = Color.FromArgb(0, Color.Red);
         }
 
         private void button2_Click(object sender, EventArgs e)
